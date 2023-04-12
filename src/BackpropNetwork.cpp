@@ -32,6 +32,67 @@ void BackpropNetwork::setTopography( std::vector<int>& topography, bool& bias )
 	
 	// Connect all the layers
 	connectLayers();
+	
+	// Initialise errors vector
+	for ( int i = 0; i < output_nodes; i++ )
+	{
+		networkErrors.push_back( 0 );
+		networkErrorsDerivative.push_back( 0 );
+	}
+}
+
+void BackpropNetwork::setActivation( const std::string& activFunction )
+{
+	for ( int i = 1; i < network.size(); i++ )
+	{
+		network[i].setLayerActivation( activFunction );
+	}
+}
+
+void BackpropNetwork::setLoss( const std::string& lossFunction )
+{
+	loss = setLossFunction( lossFunction );
+}
+
+void BackpropNetwork::setLearnRate( float& rate )
+{
+	learn_rate = rate;
+}
+
+void BackpropNetwork::feedForward( std::vector<float>& inputVals )
+{
+	networkInput = inputVals;
+	
+	for ( int i = 0; i < networkInput.size(); i++ )
+	{
+		network[0].output[i] = inputVals[i];
+	}
+	
+	for ( int i = 1; i < network.size(); i++ )
+	{
+		network[i].layerFeedForward();
+	}
+	
+	networkOutput = network[ network.size() - 1 ].output;	// Last layer outputs are network outputs
+	
+	std::cout << "Fedforward" << std::endl;
+}
+
+void BackpropNetwork::backPropagation( std::vector<float>& target_vals )
+{
+	calculateErrors( target_vals );
+	
+	int i = network.size() - 1;
+	
+	network[i].layerBackPropagation( target_vals );
+	
+	while ( i > 0 )
+	{
+		
+		
+		
+		i--;
+	}
 }
 
 void BackpropNetwork::createInputLayer( int& nodes )
@@ -87,25 +148,12 @@ void BackpropNetwork::connectLayers()
 	std::cout << "Connected Layers" << std::endl;
 }
 
-void BackpropNetwork::setActivation( const std::string& activFunction )
+void BackpropNetwork::calculateErrors( std::vector<float>& target_vals )
 {
-	for ( int i = 1; i < network.size(); i++ )
+	for ( int i = 0; i < networkErrors.size(); i++ )
 	{
-		network[i].setLayerActivation( activFunction );
+		networkErrors[i] = lossError( loss, networkOutput[i], target_vals[i] );
+		networkErrorsDerivative[i] = lossDerivative( loss, networkOutput[i], target_vals[i] );
 	}
 }
 
-void BackpropNetwork::setLoss( const std::string& lossFunction )
-{
-	
-}
-
-void BackpropNetwork::setLearnRate( float& rate )
-{
-	learn_rate = rate;
-}
-
-void BackpropNetwork::feedForward( std::vector<float>& inputVals )
-{
-	
-}

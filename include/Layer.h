@@ -10,7 +10,11 @@ public:
 	
 	void connectingLayer( std::vector<float>& prevOutputs );
 	
-	std::vector<float> output = {};//new std::vector<float>;
+	void layerFeedForward();
+	void layerBackPropagation( std::vector<float>& errors );
+	void layerBackPropagation();
+	
+	std::vector<float> output = {};//new std::vector<float>
 	
 private:
 	std::vector<Node> layer;
@@ -19,6 +23,7 @@ private:
 	void createNodes( int& nodes );
 	void createBias();
 	void initialiseOutputVector();
+	void updateOutputVector();
 	
 	std::string layerName = "Default";	// default name is Default
 };

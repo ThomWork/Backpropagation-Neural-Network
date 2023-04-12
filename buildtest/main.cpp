@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 
+
 #include <assert.h>
 
 #include "LoadData.cpp"
@@ -10,14 +11,15 @@
 // g++ main.cpp -o main.exe
 // ./main.exe
 
-//git init
-//git commit -m "first commit"
-//git branch -M main
-//git remote add origin git@github.com:ThomWork/Backpropagation-Neural-Network.git
-//git push -u origin main
+// git init
+// git add .
+// git commit -m "first commit"
+// git branch -M main
+// git remote add origin git@github.com:"whatever-the-repository-is"
+// git push -u origin main
 
 // cmake .
-// build
+// make
 
 void networkSetup( BackpropNetwork& network );
 void loadDataFromFile( std::vector<std::vector<float>>& data );
@@ -29,6 +31,9 @@ int main()
 	
 	std::vector<std::vector<float>> data;
 	loadDataFromFile( data );
+	
+	std::vector<float> input = {0,0};
+	myNetwork.feedForward( input );
 	
 	return 0;
 }

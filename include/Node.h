@@ -9,8 +9,9 @@ public:
 	void initialise();
 	void setNodeActivation( const std::string& activ_function );
 	void assignInputNode( float& input_node );
-	void computeOutput();
+	void nodeFeedForward();
 	float getOutput();
+	
 	
 	
 private:
@@ -18,7 +19,7 @@ private:
 	float output = 1;
 	
 	std::string activation_function = "Linear";	// default is linear
-	int activ = 0;	// deafult number for linear
+	int activ = 0;	// default number for linear
 	
 	void assignConnectionWeight();
 	void calculateWeightedSum();

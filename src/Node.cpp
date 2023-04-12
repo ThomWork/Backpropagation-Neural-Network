@@ -29,18 +29,23 @@ void Node::assignInputNode( float& input_node )
 	assignConnectionWeight();
 }
 
+void Node::nodeFeedForward()
+{
+	assert( inputNodes.size() == weights.size() );	// Each input node has a weight
+	
+	this->calculateWeightedSum();
+	this->calculateActivation();
+}
+
+float Node::getOutput()
+{
+	return output;
+}
+
 void Node::assignConnectionWeight()
 {
 	Connection temp_connection;
 	weights.push_back( temp_connection );
-}
-
-void Node::computeOutput()
-{
-	assert( inputNodes.size() == weights.size() );	// Each input node has a weight
-	
-	calculateWeightedSum();
-	calculateActivation();
 }
 
 void Node::calculateWeightedSum()
@@ -59,10 +64,3 @@ void Node::calculateActivation()
 {
 	output = activationFunction( activ , weighted_sum );
 }
-
-float Node::getOutput()
-{
-	return output;
-}
-
-
