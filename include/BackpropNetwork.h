@@ -1,5 +1,5 @@
 #include <math.h>
-#include "Losses.h"
+#include "Losses.cpp"
 #include "Layer.cpp"
 
 

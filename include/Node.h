@@ -1,4 +1,4 @@
-#include "Activations.h"
+#include "Activations.cpp"
 #include "Connection.cpp"
 
 class Node
